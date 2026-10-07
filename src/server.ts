@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import app from "./app";
 import pool from "./config/database";
 
 dotenv.config();
@@ -13,7 +14,9 @@ const startServer = async () => {
 
     connection.release();
 
+    app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+  });
   } catch (error) {
     console.error("MySQL Connection Failed:", error);
   }
