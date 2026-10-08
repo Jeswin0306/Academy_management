@@ -34,3 +34,22 @@ export const authenticateToken = (req : Request, res : Response, next : NextFunc
     })
   }
 };
+
+export const authorizeRole = (allowedRole1 : string, allowedRole2 ?: string, allowedRole3 ?: string) => {
+  return (req : Request, res : Response, next : NextFunction) => {
+    const user = (req as any).user;
+
+    if(!user){
+      return res.status(401).json({
+        message : "Unauthorized"
+      });
+    }
+
+    if(user.role !== allowedRole1 && user.role !== allowedRole2 && user.role !== allowedRole3){
+      return res.status(403).json({
+        message : "Access denied"
+      });
+    }
+    next();
+  }
+}
