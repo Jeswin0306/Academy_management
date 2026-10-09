@@ -103,7 +103,7 @@ export const getAllStudent = async(user_id ?: number) => {
   const params : number[] = [];
 
   if(user_id !== undefined){
-    sql += "AND u.id = ?";
+    sql += " AND u.id = ?";
     params.push(user_id);
   }
 
