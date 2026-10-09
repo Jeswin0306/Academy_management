@@ -80,3 +80,33 @@ export const createStudent = async (student : Students) => {
     connection.release();
   }
 };
+
+export const getAllStudent = async(user_id ?: number) => {
+  let sql = `
+  SELECT 
+    u.id AS user_id,
+    u.name,
+    u.email,
+    s.id AS student_id,
+    s.phone_no,
+    s.date_of_birth,
+    s.gender,
+    s.address,
+    s.joining_date,
+    s.status 
+  FROM users u
+  JOIN students s
+  ON u.id = s.user_id
+  WHERE u.role = "STUDENT"
+  `;
+ 
+  const params : number[] = [];
+
+  if(user_id !== undefined){
+    sql += "AND u.id = ?";
+    params.push(user_id);
+  }
+
+  const [ result ] = await pool.execute(sql, params);
+  return result;
+};

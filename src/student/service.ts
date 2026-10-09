@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import { Students, checkStudentEmail, checkAdmissionNo, createStudent } from "./model";
+import { Students, checkStudentEmail, checkAdmissionNo, createStudent, getAllStudent } from "./model";
+import { get } from "http";
 
 //insert student detail
 
@@ -35,3 +36,8 @@ export const registerStudent = async(student : Students) => {
   const result = await createStudent(newStudent);
   return result;
 };
+
+export const getStudentDetails = async(user_id ?: number) => {
+  const studentDetail = await getAllStudent(user_id);
+  return studentDetail;
+}
